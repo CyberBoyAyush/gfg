@@ -82,20 +82,32 @@ struct Node
 */
 // Function should return the sum of all the elements
 // of the binary tree
-void sumBT(Node * root, long int &sum){
-    if(root==nullptr){
-        return ;
-    }
-    // using preorder
-    sum+=root->key;
-    sumBT(root->left,sum);
-    sumBT(root->right,sum);
-    
-}
 
-long int sumBT(Node* root)
-{
-    long int sum = 0;
-    sumBT(root,sum);
-    return sum;
+
+// Traversal Method
+// void sumBT(Node * root, long int &sum){
+//     if(root==nullptr){
+//         return ;
+//     }
+//     // using preorder
+//     sum+=root->key;
+//     sumBT(root->left,sum);
+//     sumBT(root->right,sum);
+    
+// }
+
+// long int sumBT(Node* root)
+// {
+//     long int sum = 0;
+//     sumBT(root,sum);
+//     return sum;
+// }
+
+// Recursive Method
+long int sumBT(Node* root){
+    if(root==nullptr){
+        return 0;
+    }
+    
+    return root->key + sumBT(root->left) + sumBT(root->right);
 }
