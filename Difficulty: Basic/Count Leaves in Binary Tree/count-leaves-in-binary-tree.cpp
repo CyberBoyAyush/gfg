@@ -115,27 +115,46 @@ struct Node
       /      \ 
    20       30 */
    
-void countLeaf(Node * root , int &cnt){
-    // Edge Case
+   
+// Traversal Way of Doing it Approach 1
+// void countLeaf(Node * root , int &cnt){
+//     // Edge Case
+//     if(root==nullptr){
+//         return;
+//     }
+    
+//     //base case
+//     if(!root->left && !root->right){
+//         // we are on leaf node
+//         cnt++;
+//         return;
+//     }
+    
+//     //the node is not leaf node go left and right
+//     countLeaf(root->left , cnt);
+//     countLeaf(root->right , cnt);
+    
+// }
+// int countLeaves(Node* root)
+// {
+//   int cnt = 0;
+//   countLeaf(root,cnt);
+//   return cnt;
+// }
+
+
+//Recursive Way of Doing it : Approach 2
+int countLeaves(Node* root){
+    //Base Cases
     if(root==nullptr){
-        return;
+        return 0; // no leaf node 
     }
     
-    //base case
-    if(!root->left && !root->right){
-        // we are on leaf node
-        cnt++;
-        return;
+    if( !root->left && !root->right){
+        //means it th root does not hav child and is a leaf node
+        return 1;
     }
     
-    //the node is not leaf node go left and right
-    countLeaf(root->left , cnt);
-    countLeaf(root->right , cnt);
-    
-}
-int countLeaves(Node* root)
-{
-  int cnt = 0;
-  countLeaf(root,cnt);
-  return cnt;
+    //we give the sum of laf node from left and right of root
+    return countLeaves(root->left) + countLeaves(root->right);
 }
