@@ -96,43 +96,93 @@ struct Node {
 };*/
 class Solution {
 public:
-    vector<int> inOrder(Node* root)
-    {
-        //we will be using two stacks in this
-        stack<Node*>st;
-        stack<bool>v; //tracks if we have visited it before
-        vector<int>ans;
+
+// Iterative Way Tc and Sc O(n)
+    // vector<int> inOrder(Node* root)
+    // {
+    //     //we will be using two stacks in this
+    //     stack<Node*>st;
+    //     stack<bool>v; //tracks if we have visited it before
+    //     vector<int>ans;
         
-        st.push(root);
-        v.push(0);
+    //     st.push(root);
+    //     v.push(0);
         
-        while(!st.empty()){
-            Node* temp = st.top();
-            st.pop();
-            bool vis = v.top();
-            v.pop();
+    //     while(!st.empty()){
+    //         Node* temp = st.top();
+    //         st.pop();
+    //         bool vis = v.top();
+    //         v.pop();
             
-            if(vis == 0){
-                if(temp->right){
-                    st.push(temp->right);
-                    v.push(0);
-                }
+    //         if(vis == 0){
+    //             if(temp->right){
+    //                 st.push(temp->right);
+    //                 v.push(0);
+    //             }
                 
-                st.push(temp);
-                v.push(1);
+    //             st.push(temp);
+    //             v.push(1);
                 
-                if(temp->left){
-                    st.push(temp->left);
-                    v.push(0);
-                }
+    //             if(temp->left){
+    //                 st.push(temp->left);
+    //                 v.push(0);
+    //             }
+    //         }
+    //         else{
+    //             ans.push_back(temp->data);
+    //         }
+    //     }
+    //     return ans;
+    // }
+    
+    
+    
+    // Morris Traversal 
+    // TC - O(N) Sc O(1)
+    vector<int> inOrder(Node* root){
+        //vector for ans
+        vector<int> ans;
+        
+        while(root){ // run loop until root is not null
+            // left does not exists
+            if(!root->left){
+                ans.push_back(root->data);
+                root = root->right; // go to right part
             }
+            
+            // if left exists
             else{
-                ans.push_back(temp->data);
+                Node * curr = root-> left;
+                
+                //traverse curr in right side for link creation
+                while(curr->right && curr-> right!= root){
+                    curr = curr->right;
+                }
+                
+                // checking if we have traversed in left subtree
+                if(curr->right == nullptr){
+                    // not traversed
+                    curr->right = root;
+                    root = root->left;
+                }
+                
+                else{
+                    // left subtree traversed
+                    curr->right = nullptr;
+                    ans.push_back(root->data);
+                    root = root->right;
+                }
             }
         }
         return ans;
     }
 };
+
+
+
+
+
+
 
 //{ Driver Code Starts.
 
