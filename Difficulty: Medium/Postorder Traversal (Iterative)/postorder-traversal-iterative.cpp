@@ -96,23 +96,63 @@ struct Node {
 };*/
 class Solution{
     public:
-    vector<int> postOrder(Node* root) {
-        stack<Node*> st;
-        st.push(root);
-        vector<int>ans;
+    
+    // Iterative Way 
+    // TC and Sc - O(N)
+    // vector<int> postOrder(Node* root) {
+    //     stack<Node*> st;
+    //     st.push(root);
+    //     vector<int>ans;
         
-        while(!st.empty()){
-            Node * temp = st.top();
-            st.pop();
+    //     while(!st.empty()){
+    //         Node * temp = st.top();
+    //         st.pop();
             
-            ans.push_back(temp->data);
+    //         ans.push_back(temp->data);
             
-            // we need right first
-            if(temp->left){
-                st.push(temp->left);
+    //         // we need right first
+    //         if(temp->left){
+    //             st.push(temp->left);
+    //         }
+    //         if(temp->right){
+    //             st.push(temp->right);
+    //         }
+    //     }
+    //     reverse(ans.begin(),ans.end());
+    //     return ans;
+    // }
+    
+    // Morris Traversal
+    // TC - O(N) Sc - O(1)
+    
+    vector<int> postOrder(Node* root){
+        vector<int> ans;
+        
+        while(root){
+            // check right part
+            if(!root->right){
+                ans.push_back(root->data);
+                root = root->left;
             }
-            if(temp->right){
-                st.push(temp->right);
+            
+            else{
+                Node* curr = root->right;
+                
+                while(curr->left && curr->left != root){
+                    curr = curr->left;
+                }
+                
+                // left tree not traverse
+                if(curr->left==nullptr){
+                    ans.push_back(root->data);
+                    curr->left = root;
+                    root = root->right;
+                }
+                
+                else{
+                    curr->right = nullptr; //removing link
+                    root = root->left;
+                }
             }
         }
         reverse(ans.begin(),ans.end());
