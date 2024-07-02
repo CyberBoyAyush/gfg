@@ -97,29 +97,74 @@ struct Node {
 */
 class Solution{
     public:
-    vector<int> preOrder(Node* root)
-    {
-        // we can use stack for implementing this
-        stack<Node*> st;
-        st.push(root);
-        vector<int>ans;
+    
+    // Iterative Way TC and SC O(N)
+    
+    // vector<int> preOrder(Node* root)
+    // {
+    //     // we can use stack for implementing this
+    //     stack<Node*> st;
+    //     st.push(root);
+    //     vector<int>ans;
         
-        while(!st.empty()){
-            Node * temp = st.top();
-            st.pop();
+    //     while(!st.empty()){
+    //         Node * temp = st.top();
+    //         st.pop();
             
-            ans.push_back(temp->data);
+    //         ans.push_back(temp->data);
             
-            //we go right first as we our using stack
-            if(temp->right){
-                st.push(temp->right);
+    //         //we go right first as we our using stack
+    //         if(temp->right){
+    //             st.push(temp->right);
+    //         }
+    //         if(temp->left){
+    //             st.push(temp->left);
+    //         }
+    //     }
+    //     return ans;
+    // }
+    
+    //Morris Traversal 
+    // TC - O(N) SC - O(1)
+    
+    vector<int> preOrder(Node* root){
+        //vector for ans
+        vector<int> ans;
+        
+        while(root){
+            // check left part
+            if(!root->left){
+                ans.push_back(root->data);
+                root = root->right;
             }
-            if(temp->left){
-                st.push(temp->left);
+            
+            else{
+                Node* curr = root->left;
+                
+                while(curr->right && curr->right != root){
+                    curr = curr->right;
+                }
+                
+                // left tree not traverse
+                if(curr->right==nullptr){
+                    ans.push_back(root->data);
+                    curr->right = root;
+                    root = root->left;
+                }
+                
+                else{
+                    curr->right = nullptr; //removing link
+                    root = root->right;
+                }
             }
         }
         return ans;
+        
     }
+    
+    
+    
+    
 };
 
 //{ Driver Code Starts.
