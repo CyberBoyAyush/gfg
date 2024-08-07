@@ -39,14 +39,15 @@ class Solution
 	    for(int i = 0; i<V; i++)
 	        parent[i] = i;
 	       
-	    for(int u = 0; u<V; u++) {
-	        for(int &v : adj[u]) {
-	            if(u < v) {
-    	            if(find(u) == find(v))
-    	                return true;
-    	            else {
-    	                Union(u, v);
-    	            }
+	    for(int u = 0 ; u<V ; u++){
+	        for(int &v:adj[u]){
+	            if(u<v){
+	                int parent_u = find(u);
+	                int parent_v = find(v);
+	                if(parent_u == parent_v){
+	                    return true;
+	                }
+	                else Union(u,v);
 	            }
 	        }
 	    }
