@@ -17,8 +17,8 @@ class Solution {
         int child = 0; // keep tarck of child for edge case of root node
         
         // now looking neighbour
-        for(int j = 0 ; j<adj[node].size(); j++){
-            int neig = adj[node][j];
+        for(auto v : adj[node]){
+            int neig = v;
             
             if(neig == parent) continue;
             
