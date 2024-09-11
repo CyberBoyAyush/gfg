@@ -4,12 +4,11 @@ using namespace std;
 
 
 // } Driver Code Ends
-class Solution
-{
-    public:
-    //Function to return the minimum cost of connecting the ropes.
-    long long minCost(long long arr[], long long n) {
-        // craeting minheap using priority queuue
+class Solution {
+  public:
+    // Function to return the minimum cost of connecting the ropes.
+    long long minCost(vector<long long>& arr) {
+        int n = arr.size();
         priority_queue<long long,vector<long long>, greater<long long>> pq;
         
         //pushing values of arr to minheap
@@ -38,15 +37,19 @@ class Solution
 int main() {
     long long t;
     cin >> t;
+    cin.ignore();
     while (t--) {
-        long long n;
-        cin >> n;
-        long long i, a[n];
-        for (i = 0; i < n; i++) {
-            cin >> a[i];
+        string input;
+        long long num;
+        vector<long long> a;
+
+        getline(cin, input);
+        stringstream s2(input);
+        while (s2 >> num) {
+            a.push_back(num);
         }
         Solution ob;
-        cout << ob.minCost(a, n) << endl;
+        cout << ob.minCost(a) << endl;
     }
     return 0;
 }
