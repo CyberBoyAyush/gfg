@@ -113,13 +113,11 @@ class Solution {
     void mirror(Node* root) {
        // we have to swap the left and right node each other to make a mirror
        
-       // Base Case
-       if(root == nullptr){
-           return;
-       }
-       Node * temp = root->right;
-       root->right = root->left;
-       root->left = temp;
+       if(!root) return;
+       
+       Node* temp = root->left;
+       root->left = root->right;
+       root->right = temp;
        
        mirror(root->left);
        mirror(root->right);
