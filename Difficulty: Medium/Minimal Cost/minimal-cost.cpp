@@ -6,7 +6,7 @@ using namespace std;
 // } Driver Code Ends
 class Solution {
   public:
-    int solve(int n , vector<int>& arr, int& k, vector<int> &dp){
+  int solve(int n , vector<int>& arr, int& k, vector<int> &dp){
         if (n == 0) return 0;
         if(dp[n] != -1)  return dp[n];
         int mmSteps = INT_MAX;
@@ -19,7 +19,7 @@ class Solution {
         }
         return dp[n] = mmSteps;
     }
-    int minimizeCost(vector<int>& arr, int& k) {
+    int minimizeCost(int k, vector<int>& arr) {
         int n = arr.size();
         vector<int> dp(n,-1);
         return solve(n-1,arr,k,dp);
@@ -45,7 +45,7 @@ int main() {
             arr.push_back(number);
         }
         Solution obj;
-        int res = obj.minimizeCost(arr, k);
+        int res = obj.minimizeCost(k, arr);
         cout << res << endl;
         // string tl;
         // getline(cin, tl);
