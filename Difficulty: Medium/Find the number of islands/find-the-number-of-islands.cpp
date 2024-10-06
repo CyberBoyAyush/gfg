@@ -20,7 +20,7 @@ class Solution {
             // traversing in neighborurs -> 8ways
             for(int delrow = -1;delrow <= 1; delrow++){
                 for(int delcol = -1; delcol <= 1; delcol++){
-                    int nrow = row-delrow;
+                    int nrow = row+delrow;
                     int ncol = col+delcol;
                     // now checking inbound conditions
                     if(nrow >= 0 && nrow<n && ncol>=0 && ncol<m 
@@ -51,6 +51,7 @@ class Solution {
        return cnt;
     }
 };
+
 
 //{ Driver Code Starts.
 int main() {
