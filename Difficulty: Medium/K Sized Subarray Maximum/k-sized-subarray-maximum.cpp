@@ -9,20 +9,24 @@ using namespace std;
 
 class Solution {
   public:
-    // Function to find maximum of each subarray of size k.
-    vector<int> max_of_subarrays(int k, vector<int> &arr) {
+    vector<int> maxOfSubarrays(vector<int>& arr, int k) {
+        // code here
+        deque<int>dq;
         vector<int>ans;
-        priority_queue<pair<int,int>>pq;
         for(int i=0;i<k;i++){
-            pq.push({arr[i],i});
-        }
-        ans.push_back(pq.top().first);
-        for(int i=k;i<arr.size();i++){
-            pq.push({arr[i],i});
-            while(pq.top().second <=i-k){
-                pq.pop();
+            while(!dq.empty() and arr[i]>dq.back()){
+                dq.pop_back();
             }
-            ans.push_back(pq.top().first);
+            dq.push_back(arr[i]);
+        }
+        ans.push_back(dq.front());
+        for(int i=k;i<arr.size();i++){
+            if(dq.front()==arr[i-k]) dq.pop_front();
+            while(!dq.empty() and arr[i]>dq.back()){
+                dq.pop_back();
+            }
+            dq.push_back(arr[i]);
+            ans.push_back(dq.front());
         }
         return ans;
     }
