@@ -1,64 +1,28 @@
-//{ Driver Code Starts
-// Initial Template for C++
-#include <bits/stdc++.h>
-using namespace std;
-
-
-// } Driver Code Ends
 class Solution {
   public:
     vector<vector<int>> kClosest(vector<vector<int>>& points, int k) {
-         priority_queue<pair<int,int>> pq; //max-heap
-        
-        int n=points.size();
-        
-        for(int i=0;i<n;i++){
-            int x=points[i][0];
-            int y=points[i][1];
-            int d = x*x + y*y;
+        // code here
+        priority_queue< pair<float,pair<int,int>> > pq;
+        vector<vector<int>> ans ;
+        for(auto it : points){
+            int x = it[0] , y = it[1];
+            float dis = sqrt(abs(x*x)+abs(y*y));
             
-            pq.push({d,i});
-            
-            if(pq.size()>k)
-            pq.pop();
+            if(pq.size() < k)
+                pq.push({dis,{x,y}});
+            else {
+                if(pq.top().first > dis) {
+                    pq.pop();
+                    pq.push({dis,{x,y}});
+                }
+            }
         }
-        
-        vector<vector<int>> res;
-        
-        while(!pq.empty()){
-            int i = pq.top().second;
+        for(int i = 0 ; i < k ; i++){
+            auto it = pq.top();
+            int x = it.second.first,y=it.second.second;
             pq.pop();
-            res.push_back({points[i][0],points[i][1]});
+            ans.push_back({x,y});
         }
-        
-        return res;
+        return ans ;
     }
 };
-
-//{ Driver Code Starts.
-
-int main() {
-    int t;
-    cin >> t;
-    while (t--) {
-        int k;
-        cin >> k;
-        int n;
-        cin >> n;
-        vector<vector<int>> points(n, vector<int>(2));
-        for (int i = 0; i < n; i++) {
-            cin >> points[i][0] >> points[i][1];
-        }
-        Solution ob;
-        vector<vector<int>> ans = ob.kClosest(points, k);
-        sort(ans.begin(), ans.end());
-        for (const vector<int>& point : ans) {
-            cout << point[0] << " " << point[1] << endl;
-        }
-        cout << "~" << endl;
-    }
-
-    return 0;
-}
-
-// } Driver Code Ends
