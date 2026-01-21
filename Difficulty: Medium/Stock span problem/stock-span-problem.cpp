@@ -1,50 +1,29 @@
-//{ Driver Code Starts
-#include <bits/stdc++.h>
-using namespace std;
-
-
-// } Driver Code Ends
 class Solution {
   public:
     vector<int> calculateSpan(vector<int>& arr) {
-         int n=arr.size();
-        vector<int> v(n,1);
-        stack<pair<int,int>> st;
-        for(int i=0;i<n;i++){
-            while(!st.empty() && st.top().first<=arr[i]){
-                v[i]+=v[st.top().second];
-                st.pop();
+           stack<int>st;
+           vector<int>ans(arr.size(),0);
+           for(int i=0;i<arr.size();++i){
+               
+            // ---- TIME COMPLEXITY EXPLANATION ----
+            // Each index 'i' is pushed once into stack.
+            // Each index can be popped only once.
+            // So even though this while loop looks heavy,
+            // total pops across the entire program = n.
+            // Hence amortized O(1) work per iteration.
+            // Overall TC = O(n).
+
+            while(!st.empty() && arr[st.top()] <= arr[i]) {
+                st.pop();   // This pop will not happen again for this index.
             }
-            st.push({arr[i],i});
-            
-        }
-        return v;
+
+               
+               if(st.empty()) ans[i] = i+1;
+               else ans[i] = (i-st.top());
+               
+               st.push(i);
+               
+           }
+           return ans;
     }
 };
-
-//{ Driver Code Starts.
-
-int main() {
-    string ts;
-    getline(cin, ts);
-    int t = stoi(ts);
-    while (t--) {
-        vector<int> arr;
-        string input;
-        getline(cin, input);
-        stringstream ss(input);
-        int number;
-        while (ss >> number) {
-            arr.push_back(number);
-        }
-        Solution obj;
-        vector<int> ans = obj.calculateSpan(arr);
-        for (int i = 0; i < ans.size(); i++) {
-            cout << ans[i] << " ";
-        }
-        cout << endl;
-        cout << "~" << endl;
-    }
-    return 0;
-}
-// } Driver Code Ends
